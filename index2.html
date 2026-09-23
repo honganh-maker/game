@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>HTML5 미니 게임 아케이드 포털</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #0d0e15;
+            font-family: 'Pretendard', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        #portal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .title {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00f0ff, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #a0aec0;
+            letter-spacing: 1px;
+        }
+        /* 6개 게임 정렬을 위한 3열 그리드 (모바일 대응 자동 조절) */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+        .game-card {
+            background: rgba(20, 25, 45, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        .game-card:hover::before {
+            transform: translateX(100%);
+        }
+        /* 카드 마우스 호버 효과 (색상 포인트 변형) */
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--theme-color, #00f0ff);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.15);
+            background: rgba(20, 25, 45, 0.8);
+        }
+        .card-top {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        .game-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+            display: inline-block;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+        }
+        .game-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .game-desc {
+            font-size: 14px;
+            color: #a0aec0;
+            line-height: 1.5;
+        }
+        .play-btn {
+            align-self: flex-end;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background: var(--theme-gradient, linear-gradient(135deg, #00f0ff, #0072ff));
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+        .game-card:hover .play-btn {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--theme-color, #00f0ff);
+        }
+        .footer {
+            margin-top: 60px;
+            font-size: 12px;
+            color: #4a5568;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="portal-container">
+    <header class="header">
+        <h1 class="title">MINI GAME ARCADE</h1>
+        <p class="subtitle">웹 브라우저에서 바로 즐기는 6가지 미니 게임 라이브러리</p>
+    </header>
+
+    <main class="game-grid">
+        <!-- 1번 게임: 숫자 맞추기 -->
+        <a href="game1_number_guessing.html" class="game-card" style="--theme-color: #ffd700; --theme-gradient: linear-gradient(135deg, #f1c40f, #f39c12);">
+            <div class="card-top">
+                <span class="game-icon">🎲</span>
+                <h2 class="game-title">Number Guessing</h2>
+                <p class="game-desc">컴퓨터가 숨긴 비밀의 숫자를 최소한의 힌트와 시도로 맞춰보세요. 당신의 직감과 수리적 추론 능력을 시험합니다.</p>
+            </div>
+            <button class="play-btn">PLAY NOW</button>
+        </a>
+
+        <!-- 2번 게임: 틱택토 -->
+        <a href="game2_tic_tac_toe.html" class="game-card" style="--theme-color: #00f0ff; --theme-gradient: linear-gradient(135deg, #00f0ff, #0072ff);">
+            <div class="card-top">
+                <span class="game-icon">❌</span>
+                <h2 class="game-title">Tic Tac Toe</h2>
+                <p class="game-desc">가장 고전적이면서도 치열한 수싸움. 한 수 앞을 내다보고 격자판 위에 먼저 3개의 연속된 라인을 완성해 승리하세요.</p>
+            </div>
+            <button class="play-btn">PLAY NOW</button>
+        </a>
+
+        <!-- 3번 게임: 가위바위보 -->
+        <a href="game3_rock_paper_scissors.html" class="game-card" style="--theme-color: #ff007f; --theme-gradient: linear-gradient(135deg, #ff007f, #7928ca);">
+            <div class="card-top">
+                <span class="game-icon">✊</span>
+                <h2 class="game-title">Rock Paper Scissors</h2>
+                <p class="game-desc">단순함 속에 숨겨진 고도의 심리전! 연속 승리에 도전하여 컴퓨터를 상대로 최고 연승 기록을 경신해 보세요.</p>
+            </div>
+            <button class="play-btn">PLAY NOW</button>
+        </a>
+
+        <!-- 4번 게임: 스네이크 게임 -->
+        <a href="game4_snake_game.html" class="game-card" style="--theme-color: #00ff66; --theme-gradient: linear-gradient(135deg, #00ff66, #009933);">
+            <div class="card-top">
+                <span class="game-icon">🐍</span>
+                <h2 class="game-title">Snake Game</h2>
+                <p class="game-desc">화면 속 먹이를 먹을 때마다 몸집이 늘어나는 뱀을 조종하세요. 벽이나 자신의 몸에 부딪히지 않고 한계에 도전합니다.</p>
+            </div>
+            <button class="play-btn">PLAY NOW</button>
+        </a>
+
+        <!-- 5번 게임: 카드 뒤집기 -->
+        <a href="game5_memory_match.html" class="game-card" style="--theme-color: #e91e63; --theme-gradient: linear-gradient(135deg, #f857a6, #ff5858);">
+            <div class="card-top">
+                <span class="game-icon">🃏</span>
+                <h2 class="game-title">Memory Match</h2>
+                <p class="game-desc">제한 시간 내에 흩어져 있는 카드들의 짝을 정확하게 찾아내어 매칭하세요. 당신의 순간 기억력을 극대화할 시간입니다.</p>
+            </div>
+            <button class="play-btn">PLAY NOW</button>
+        </a>
+
+        <!-- 6번 게임: 반응속도 테스트 -->
+        <a href="game6_reaction_test.html" class="game-card" style="--theme-color: #e040fb; --theme-gradient: linear-gradient(135deg, #b388ff, #6200ea);">
+            <div class="card-top">
+                <span class="game-icon">⚡</span>
+                <h2 class="game-title">Reaction Test</h2>
+                <p class="game-desc">화면의 색상이 변하는 찰나의 순간을 포착하여 클릭하세요. 밀리초(ms) 단위로 측정되는 당신의 초감각 반응 속도를 확인합니다.</p>
+            </div>
+            <button class="play-btn">PLAY NOW</button>
+        </a>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Mini Game Arcade Portal. All HTML5 Games Integrated.</p>
+    </footer>
+</div>
+
+</body>
+</html>
