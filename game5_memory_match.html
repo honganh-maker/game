@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>카드 뒤집기 기억력 게임</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background-color: #f4f4f9; }
+        .grid { display: grid; grid-template-columns: repeat(4, 80px); grid-gap: 10px; justify-content: center; margin-top: 20px; }
+        .card { width: 80px; height: 80px; background-color: #333; color: transparent; font-size: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 8px; }
+        .card.flipped { background-color: #fff; color: black; border: 2px solid #333; }
+    </style>
+</head>
+<body>
+    <h2>🎴 기억력 카드 게임</h2>
+    <div class="grid" id="grid"></div>
+
+    <script>
+        const emojis = ['🍎', '🍎', '🍌', '🍌', '🍇', '🍇', '🍓', '🍓'];
+        emojis.sort(() => 0.5 - Math.random());
+        let selected = [];
+        let matched = 0;
+
+        const grid = document.getElementById('grid');
+        emojis.forEach((emoji, idx) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.emoji = emoji;
+            card.onclick = () => flipCard(card);
+            grid.appendChild(card);
+        });
+
+        function flipCard(card) {
+            if (selected.length < 2 && !card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                card.innerText = card.dataset.emoji;
+                selected.push(card);
+
+                if (selected.length === 2) {
+                    setTimeout(checkMatch, 800);
+                }
+            }
+        }
+
+        function checkMatch() {
+            if (selected[0].dataset.emoji === selected[1].dataset.emoji) {
+                matched += 2;
+                if (matched === emojis.length) {
+                    alert('🎉 모든 카드를 찾았습니다!');
+                }
+            } else {
+                selected[0].classList.remove('flipped');
+                selected[0].innerText = '';
+                selected[1].classList.remove('flipped');
+                selected[1].innerText = '';
+            }
+            selected = [];
+        }
+    </script>
+</body>
+</html>
